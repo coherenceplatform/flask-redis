@@ -1,0 +1,28 @@
+backend:
+  type: backend
+  index_file_name: index.html
+  #url_path: /api
+  url_path: /
+  repo_path: backend
+  migration: ["migrate_db.sh"]
+
+  local_packages: ["/app/app.py"]
+
+  dev: ["PORT=5000 python3", "-m", "flask", "run", "--host=0.0.0.0"]
+  #prod: ["PORT=5000 python3", "-m", "flask", "run", "--host=0.0.0.0"]
+  #prod: ["uwsgi", "--socket", "0.0.0.0:$PORT", "--protocol=http", "--ini", "app.ini"]
+  prod: ["uwsgi", "--ini", "app.ini"]
+
+  system:
+    dev:
+      port: 5000
+
+  resources:
+  - name: db1
+    engine: postgres
+    version: 13
+    type: database
+ - name: redis
+    engine: redis
+    version: 4
+    type: cache
