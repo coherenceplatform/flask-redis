@@ -22,7 +22,7 @@ backend:
     engine: postgres
     version: 13
     type: database
- - name: redis
-    engine: redis
-    version: 4
-    type: cache
+    # - name: redis
+    #    engine: redis
+    #    version: 4
+    #    type: cache
