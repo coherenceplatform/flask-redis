@@ -10,6 +10,7 @@ app = Flask(__name__)
 app.secret_key = '1234'
 
 coherence_dev=os.environ.get('COHERENCE_DEV')
+port=os.environ.get('PORT')
 #dbname=os.environ['DB_NAME']
 #dbuser=os.environ['DB_USER']
 #dbpass=os.environ['DB_PASSWORD']
@@ -40,6 +41,7 @@ for env in os.environ:
 #print ("DBPORT: %s" % (dbport))
 print ("REDISHOST: %s" % (redishost))
 print ("REDISPORT: %s" % (redisport))
+print ("PORT: %s" % (port))
 
 #REDIS_URL = os.environ.get('REDIS_URL')
 redis_url = f"redis://{redishost}:{redisport}"
