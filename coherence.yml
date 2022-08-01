@@ -5,7 +5,7 @@ backend:
   url_path: /
   repo_path: backend
   #migration: ["migrate_db.sh"]
-  migration: []
+  migration: [":"]
 
   local_packages: ["/app/app.py"]
 
