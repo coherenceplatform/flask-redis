@@ -18,7 +18,7 @@ RUN ln -sf /app/migrate_db.sh /usr/bin/migrate_db.sh
 
 #RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ buster-pgdg main" > /etc/apt/sources.list.d/pgdg.list
 
-RUN DEBIAN=noninteractive apt-get update && apt-get install -y postgresql-client-13
+RUN DEBIAN=noninteractive apt-get update && apt-get install -y postgresql-client-13 vim
 
 
 EXPOSE 5000

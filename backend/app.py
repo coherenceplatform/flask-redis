@@ -10,22 +10,24 @@ coherence_dev=os.environ.get('COHERENCE_DEV')
 dbname=os.environ['DB_NAME']
 dbuser=os.environ['DB_USER']
 dbpass=os.environ['DB_PASSWORD']
-dbhost=os.environ['DB_HOST']
-
 
 dbsocket=""
 dbendpoint=""
+dbhost=""
 dbport=""
 for env in os.environ:
     if env.endswith("DB1_SOCKET"):
         dbsocket=os.environ[env]
     if env.endswith("DB1_ENDPOINT"):
         dbendpoint=os.environ[env]
+    if env == "DB_HOST":
+        dbhost=os.environ[env]
     if env.endswith("DB1_PORT"):
         dbport=os.environ[env]
 
 print ("DBSOCKET: %s" % (dbsocket))
 print ("DBENDPOINT: %s" % (dbendpoint))
+print ("DBHOST: %s" % (dbhost))
 print ("DBPORT: %s" % (dbport))
 
 if coherence_dev is not None and coherence_dev == "true":
