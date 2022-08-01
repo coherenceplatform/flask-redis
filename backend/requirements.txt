@@ -1,7 +1,7 @@
 #flask
 redis
-psycopg2
+#psycopg2
 uwsgi
 Flask
-Flask-Migrate
-Flask-SQLAlchemy
+#Flask-Migrate
+#Flask-SQLAlchemy
