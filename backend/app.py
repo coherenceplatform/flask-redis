@@ -6,10 +6,8 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 
 app = Flask(__name__)
-app.secret_key = os.environ.get('SECRET_KEY', default=None)
-
-REDIS_URL = os.environ.get('REDIS_URL')
-store = redis.Redis.from_url(REDIS_URL)
+#app.secret_key = os.environ.get('SECRET_KEY', default=None)
+app.secret_key = '1234'
 
 coherence_dev=os.environ.get('COHERENCE_DEV')
 dbname=os.environ['DB_NAME']
@@ -20,6 +18,8 @@ dbsocket=""
 dbendpoint=""
 dbhost=""
 dbport=""
+redishost=""
+redisport=""
 for env in os.environ:
     if env.endswith("DB1_SOCKET"):
         dbsocket=os.environ[env]
@@ -29,11 +29,22 @@ for env in os.environ:
         dbhost=os.environ[env]
     if env.endswith("DB1_PORT"):
         dbport=os.environ[env]
+    if env.endswith("REDIS_IP"):
+        redishost=os.environ[env]
+    if env.endswith("REDIS_PORT"):
+        redisport=os.environ[env]
 
 print ("DBSOCKET: %s" % (dbsocket))
 print ("DBENDPOINT: %s" % (dbendpoint))
 print ("DBHOST: %s" % (dbhost))
 print ("DBPORT: %s" % (dbport))
+print ("REDISHOST: %s" % (redishost))
+print ("REDISPORT: %s" % (redisport))
+
+#REDIS_URL = os.environ.get('REDIS_URL')
+redis_url = f"redis://{redishost}:{redisport}"
+
+store = redis.Redis.from_url(redis_url)
 
 if coherence_dev is not None and coherence_dev == "true":
     if dbhost is not None and dbhost != "":
