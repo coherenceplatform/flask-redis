@@ -14,6 +14,7 @@ dbpass=os.environ['DB_PASSWORD']
 
 dbsocket=""
 dbendpoint=""
+dbhost=""
 dbport=""
 for env in os.environ:
     if env.endswith("DB1_SOCKET"):
