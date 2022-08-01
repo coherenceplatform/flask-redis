@@ -12,8 +12,9 @@ backend:
   dev: ["PORT=5000 python3", "-m", "flask", "run", "--host=0.0.0.0"]
   #prod: ["PORT=5000 python3", "-m", "flask", "run", "--host=0.0.0.0"]
   #prod: ["uwsgi", "--socket", "0.0.0.0:$PORT", "--protocol=http", "--ini", "app.ini"]
-  prod: ["PORT=5000 python3", "-m", "flask", "run", "--host=0.0.0.0"]
+  #prod: ["PORT=5000 python3", "-m", "flask", "run", "--host=0.0.0.0"]
   #prod: ["uwsgi", "--socket", "0.0.0.0:$PORT", "--ini", "app.ini"]
+  prod: ["uwsgi", "--ini", "app.ini"]
 
   system:
     dev:
