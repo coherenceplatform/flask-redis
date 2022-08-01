@@ -18,10 +18,10 @@ RUN ln -sf /app/migrate_db.sh /usr/bin/migrate_db.sh
 
 #RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ buster-pgdg main" > /etc/apt/sources.list.d/pgdg.list
 
-RUN DEBIAN=noninteractive apt-get update && apt-get install -y postgresql-client-13 vim
+RUN DEBIAN=noninteractive apt-get update && apt-get install -y postgresql-client-13
 
 
-EXPOSE 8080
+EXPOSE 5000
 
 
 #RUN chown nobody:nogroup /app
@@ -29,5 +29,5 @@ EXPOSE 8080
 
 #CMD ["python3", "-m", "flask", "run", "--host=0.0.0.0"]
 #CMD ["uwsgi", "--socket", "0.0.0.0:5000", "--protocol=http", "-w", "wsgi:app"]
-#CMD ["uwsgi", "--socket", "0.0.0.0:8080", "--protocol=http", "--ini", "app.ini"]
-CMD ["uwsgi", "--ini", "app.ini"]
+CMD ["uwsgi", "--socket", "0.0.0.0:5000", "--protocol=http", "--ini", "app.ini"]
+#CMD ["uwsgi", "--ini", "app.ini"]
