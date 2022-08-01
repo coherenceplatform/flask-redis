@@ -10,34 +10,34 @@ app = Flask(__name__)
 app.secret_key = '1234'
 
 coherence_dev=os.environ.get('COHERENCE_DEV')
-dbname=os.environ['DB_NAME']
-dbuser=os.environ['DB_USER']
-dbpass=os.environ['DB_PASSWORD']
+#dbname=os.environ['DB_NAME']
+#dbuser=os.environ['DB_USER']
+#dbpass=os.environ['DB_PASSWORD']
 
-dbsocket=""
-dbendpoint=""
-dbhost=""
-dbport=""
+#dbsocket=""
+#dbendpoint=""
+#dbhost=""
+#dbport=""
 redishost=""
 redisport=""
 for env in os.environ:
-    if env.endswith("DB1_SOCKET"):
-        dbsocket=os.environ[env]
-    if env.endswith("DB1_ENDPOINT"):
-        dbendpoint=os.environ[env]
-    if env == "DB_HOST":
-        dbhost=os.environ[env]
-    if env.endswith("DB1_PORT"):
-        dbport=os.environ[env]
+#    if env.endswith("DB1_SOCKET"):
+#        dbsocket=os.environ[env]
+#    if env.endswith("DB1_ENDPOINT"):
+#        dbendpoint=os.environ[env]
+#    if env == "DB_HOST":
+#        dbhost=os.environ[env]
+#    if env.endswith("DB1_PORT"):
+#        dbport=os.environ[env]
     if env.endswith("REDIS_IP"):
         redishost=os.environ[env]
     if env.endswith("REDIS_PORT"):
         redisport=os.environ[env]
 
-print ("DBSOCKET: %s" % (dbsocket))
-print ("DBENDPOINT: %s" % (dbendpoint))
-print ("DBHOST: %s" % (dbhost))
-print ("DBPORT: %s" % (dbport))
+#print ("DBSOCKET: %s" % (dbsocket))
+#print ("DBENDPOINT: %s" % (dbendpoint))
+#print ("DBHOST: %s" % (dbhost))
+#print ("DBPORT: %s" % (dbport))
 print ("REDISHOST: %s" % (redishost))
 print ("REDISPORT: %s" % (redisport))
 
@@ -46,18 +46,18 @@ redis_url = f"redis://{redishost}:{redisport}"
 
 store = redis.Redis.from_url(redis_url)
 
-if coherence_dev is not None and coherence_dev == "true":
-    if dbhost is not None and dbhost != "":
-        url = f"postgresql://{dbuser}:{dbpass}@{dbhost}:{dbport}/{dbname}"
-    else:
-        url = f"postgresql://{dbuser}:{dbpass}@localhost:{dbport}/{dbname}"
-else:
-    if dbendpoint != "":
-        url = f"postgresql://{dbuser}:{dbpass}@{dbendpoint}:{dbport}/{dbname}"
-    else:
-        url = f"postgresql://{dbuser}:{dbpass}@/{dbname}?host={dbsocket}"
-
-print ("URI: %s" % (url))
+#if coherence_dev is not None and coherence_dev == "true":
+#    if dbhost is not None and dbhost != "":
+#        url = f"postgresql://{dbuser}:{dbpass}@{dbhost}:{dbport}/{dbname}"
+#    else:
+#        url = f"postgresql://{dbuser}:{dbpass}@localhost:{dbport}/{dbname}"
+#else:
+#    if dbendpoint != "":
+#        url = f"postgresql://{dbuser}:{dbpass}@{dbendpoint}:{dbport}/{dbname}"
+#    else:
+#        url = f"postgresql://{dbuser}:{dbpass}@/{dbname}?host={dbsocket}"
+#
+#print ("URI: %s" % (url))
 #app.config['SQLALCHEMY_DATABASE_URI'] = url
 #
 #
