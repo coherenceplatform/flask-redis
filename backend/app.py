@@ -1,10 +1,15 @@
 import os
+import redis
 import psycopg2
-from flask import Flask, render_template, request, url_for, redirect
+from flask import Flask, render_template, request, url_for, redirect, session, escape
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 
 app = Flask(__name__)
+app.secret_key = os.environ.get('SECRET_KEY', default=None)
+
+REDIS_URL = os.environ.get('REDIS_URL')
+store = redis.Redis.from_url(REDIS_URL)
 
 coherence_dev=os.environ.get('COHERENCE_DEV')
 dbname=os.environ['DB_NAME']
@@ -42,31 +47,48 @@ else:
         url = f"postgresql://{dbuser}:{dbpass}@/{dbname}?host={dbsocket}"
 
 print ("URI: %s" % (url))
-app.config['SQLALCHEMY_DATABASE_URI'] = url
+#app.config['SQLALCHEMY_DATABASE_URI'] = url
+#
+#
+#db = SQLAlchemy(app)
+#migrate = Migrate(app, db)
+#
+#from models import Message
+#db.create_all()
+#db.session.commit()
 
-
-db = SQLAlchemy(app)
-migrate = Migrate(app, db)
-
-from models import Message
-db.create_all()
-db.session.commit()
 
 @app.route('/')
 def index():
+    if 'username' in session:
+        username = escape(session['username'])
+        visits = store.hincrby(username, 'visits', 1)
+        store.expire(username, 120)
 
-    messages = Message.query.all()
-    return render_template('index.html', messages=messages)
+        return '''
+            Logged in as {0}.<br>
+            Visits: {1}
+            '''.format(username, visits)
 
+    return 'You are not logged in'
 
-@app.route('/create/', methods=('GET', 'POST'))
-def create():
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+
     if request.method == 'POST':
-        message = Message()
-        message.value = request.form['value']
-        db.session.merge(message)
-        db.session.commit()
 
-        return redirect(url_for('index'))
+        session['username'] = request.form['username']
+        return redirect('/')
 
-    return render_template('create.html')
+    return '''
+        <form method="post">
+        <p><input type=text name=username>
+        <p><input type=submit value=Login>
+        </form>
+    '''
+
+@app.route('/logout')
+def logout():
+
+    session.pop('username', None)
+    return redirect('/')

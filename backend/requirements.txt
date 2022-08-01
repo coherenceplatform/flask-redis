@@ -1,4 +1,5 @@
 #flask
+redis
 psycopg2
 uwsgi
 Flask
