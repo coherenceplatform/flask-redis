@@ -1,0 +1,14 @@
+backend:
+  type: backend
+  index_file_name: index.html
+  url_path: /
+  repo_path: backend
+  dev: ["python3", "-m", "flask", "run", "--host=0.0.0.0"]
+  prod: ["uwsgi", "--socket", "0.0.0.0:$PORT", "--protocol=http", "--ini", "app.ini"]
+
+
+  resources:
+  - name: redis
+    engine: redis
+    version: 4
+    type: cache
